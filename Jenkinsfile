@@ -43,20 +43,11 @@ pipeline {
 
         stage('params') {
 
-            input{
-                message 'Should we proceed?'
-                ok 'Yes we do!'
 
-                parameters {
-
-                    string(name:'Tipo',defaultValue:'env', description:'Che tipo è???')
-
-                }
-            }
 
             steps {
 
-              echo "tipo: ${Tipo}"
+              echo "stampa params"
 
             }
         }
