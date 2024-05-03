@@ -1,48 +1,74 @@
 #! /usr/bin/env groovy
-@Library('shared-jenkins-library') _
 pipeline {
     agent any
 
+    tools {
+
+        maven 'Maven'
+
+    }
+
+    environment {
+
+        NAME = 'GUIDO'
+
+    }
+
+
+
     stages {
 
-
-        stage('build') {
-           when {
-            expression {
-                BRANCH_NAME == 'master'
-            }
-            }
-
+        stage('init') {
             steps {
-
-              script{
-                buildJar()
-              }
+                echo 'Initialize job...'
+                sh 'mvn --version'
             }
         }
-        stage('build Image') {
 
+        stage('echoVars') {
+
+
+
+            when {
+                environment name :'NAME' , value :'GUIDO'
+            }
 
             steps {
 
-              script{
-                   buildImage()
-               }
+              echo "print vars..."
+              echo "$NAME"
 
             }
         }
-        stage('deploy') {
 
+        stage('params') {
+
+            input{
+                message 'Should we proceed?'
+                ok 'Yes we do!'
+
+                parameters {
+
+                    string(name:'Tipo',defaultValue:'env', description:'Che tipo è???')
+
+                }
+            }
 
             steps {
 
-              script{
-                   deployApp()
-               }
+              echo "tipo: ${Tipo}"
 
             }
         }
 
     }
 
+    post {
+
+            always {
+
+                echo "Job successful!!!"
+            }
+
+        }
 }
