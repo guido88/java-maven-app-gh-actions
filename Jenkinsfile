@@ -58,7 +58,7 @@ pipeline {
 
             always {
 
-                echo "Job successful!!!"
+                echo "Job ok!!!"
             }
 
         }
