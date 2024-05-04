@@ -58,7 +58,7 @@ pipeline {
 
             always {
 
-                echo "Job hhhook s!!!"
+                echo "Job hooks!!!"
             }
 
         }
